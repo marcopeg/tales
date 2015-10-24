@@ -7,6 +7,6 @@ export const DEV = {
         currentView: 'characters'
     },
     characters: { ...characters.BASIC, 
-        // activeItem: Object.keys(characters.BASIC.items)[0]
+        activeItem: Object.keys(characters.BASIC.items)[0]
     }
 };

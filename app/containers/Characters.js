@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/lib/Col';
 import { CardPanel } from 'components/CardPanel';
 import { EditPanel } from 'components/EditPanel';
 
-import { startEdit, cancelEdit } from 'actions/characters-actions';
+import { startEdit, cancelEdit, updateItem } from 'actions/characters-actions';
 
 @connect(s => s.characters)
 export class Characters extends React.Component {
@@ -27,7 +27,9 @@ export class Characters extends React.Component {
     }
 
     onSave = data => {
-        console.log('save new data', data);
+        var { activeItem } = this.props;
+        this.props.dispatch(updateItem(activeItem, data));
+        this.props.dispatch(cancelEdit());
     }
 
     render() {
@@ -39,11 +41,13 @@ export class Characters extends React.Component {
         if (activeItem) {
             activeItem = items[activeItem];
             fields = [{
+                name: 'name',
                 type: 'text',
                 label: 'Name',
                 value: activeItem.name,
                 isTitle: true
             },{
+                name: 'desc',
                 type: 'textarea',
                 label: 'Description',
                 value: activeItem.desc

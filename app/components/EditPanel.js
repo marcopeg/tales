@@ -6,16 +6,6 @@ import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
-const dataTypes = {
-    void: () => {},
-    character: data => {
-        return {
-            title: data.name,
-            desc: data.desc
-        };
-    }
-}
-
 export class EditPanel extends React.Component {
 
     static defaultProps = {
@@ -26,53 +16,76 @@ export class EditPanel extends React.Component {
 
     state = {
         isVisible: false,
-        title: 'Modal Title'
+        titleField: '--',
+        values: {}
     }
 
     componentWillMount() {
-        this.__setModalTitle(this.props.fields);
+        this.__setModalFields(this.props.fields);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.__setModalTitle(nextProps.fields);
+        this.__setModalFields(nextProps.fields);
     }
 
-    __setModalTitle = fields => {
-        if (fields) {
-            fields
-            .filter(field => field.isTitle)
-            .forEach(field => this.setState({title: field.value}));
-        }
+    __setModalFields = fields => {
+        var titleField = this.state.titleField;
+        var values = {};
+        fields = fields || [];
+
+        // set local values
+        fields.forEach(field => values[field.name] = field.value);
+        
+        // modal title
+        fields
+        .filter(field => field.isTitle)
+        .forEach(field => {titleField = field.name});
+        
+        this.setState({titleField, values});
     }
 
     onSave = () => {
-        console.log('save!');
+        var { values } = this.state;
+        var { onSave } = this.props;
+        onSave(values);
+    }
+
+    onFieldUpdate = name => {
+        return e => {
+            var { values } = this.state;
+            values[name] = e.target.value;
+            this.setState({values});
+        }
     }
 
     render() {
 
-        var header, content, footer;
         var { fields, onCancel } = this.props;
+        var { titleField, values } = this.state;
         var { onSave } = this;
 
-        var { title } = this.state;
         var isVisible = null !== fields;
+        var title = values[titleField];
 
-        if (isVisible) {
+        fields = (fields || []).map(field => {
+            var { name, type, label } = field;
+            var value = values[name];
+            return (
+                <p key={name}>
+                    {label}
+                    <input value={value} onChange={this.onFieldUpdate(name)} />
+                </p>
+            );
+        });
 
-            header = (
+        return (
+            <Modal show={isVisible} onHide={onCancel} bsSize="large">
                 <Modal.Header closeButton>
                     <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
-            );
-
-            content = (
                 <Modal.Body>
-                    <p>--desc--</p>
+                    {fields}
                 </Modal.Body>
-            );
-
-            footer = (
                 <Modal.Footer>
                     <Button bsStyle="link" onClick={onCancel}>
                         cancel
@@ -81,14 +94,6 @@ export class EditPanel extends React.Component {
                         Save
                     </Button>
                 </Modal.Footer>
-            );
-        }
-
-        return (
-            <Modal show={isVisible} onHide={onCancel} bsSize="large">
-                {header}
-                {content}
-                {footer}
             </Modal>
         );
     }

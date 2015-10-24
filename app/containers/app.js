@@ -40,10 +40,10 @@ export class App extends React.Component {
                     <NavBrand>Once Upon a Time</NavBrand>
                 </Navbar>
                 <Row>
-                    <Col xs={4}>
+                    <Col xs={3}>
                         <SideMenu />
                     </Col>
-                    <Col xs={8}>
+                    <Col xs={9}>
                         {currentView}
                     </Col>
                 </Row>
