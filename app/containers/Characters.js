@@ -48,7 +48,7 @@ export class Characters extends React.Component {
                 isTitle: true
             },{
                 name: 'desc',
-                type: 'textarea',
+                type: 'wysiwyg',
                 label: 'Description',
                 value: activeItem.desc
             }];

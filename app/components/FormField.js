@@ -9,7 +9,6 @@ export class FormField extends React.Component {
         var { type, label, value, onChange } = this.props;
         switch (type) {
             case 'wysiwyg':
-            case 'textarea':
                 return (
                     <div className="form-group">
                         <label>{label}</label>
