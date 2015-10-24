@@ -4,6 +4,7 @@ import {
     START_EDIT,
     CANCEL_EDIT,
     UPDATE_ITEM,
+    REMOVE_ITEM,
     SET_SAVING
 } from 'actions/characters-actions';
 
@@ -25,6 +26,10 @@ export function charactersReducer(state = initialState, action) {
         case UPDATE_ITEM:
             var items = { ...state.items };
             items[payload.id] = payload.data;
+            return { ...state, items };
+        case REMOVE_ITEM:
+            var items = { ...state.items };
+            delete(items[payload.id]);
             return { ...state, items };
         case SET_SAVING:
             return { ...state, isSaving: payload.value};

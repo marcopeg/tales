@@ -7,8 +7,8 @@ export const DEV = {
     app: { ...app.BASIC, 
         currentView: 'characters'
     },
-    characters: { ...characters.BASIC, 
-        // activeItem: Object.keys(characters.BASIC.items)[0]
-        activeItem: START_CREATE
-    }
+    // characters: { ...characters.BASIC, 
+    //     // activeItem: Object.keys(characters.BASIC.items)[0]
+    //     // activeItem: START_CREATE
+    // }
 };

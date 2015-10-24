@@ -2,7 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { initFirebase } from 'services/firebase-service';
+import { init as initFirebase } from 'services/firebase-service';
+import { init as initCharacters } from 'services/characters-service';
 
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -24,6 +25,7 @@ export class App extends React.Component {
 
     componentWillMount() {
         this.props.dispatch(initFirebase());
+        this.props.dispatch(initCharacters());
     }
 
     render() {

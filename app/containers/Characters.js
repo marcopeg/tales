@@ -13,7 +13,7 @@ import { EditPanel } from 'components/EditPanel';
 import { startCreate, startEdit, cancelEdit } from 'actions/characters-actions';
 import { START_CREATE } from 'actions/characters-actions';
 
-import { create, save } from 'services/characters-service';
+import { create, save, remove } from 'services/characters-service';
 
 @connect(s => s.characters)
 export class Characters extends React.Component {
@@ -27,7 +27,7 @@ export class Characters extends React.Component {
     }
 
     onDelete = item => {
-        console.log('delete...', item.id);
+        this.props.dispatch(remove(item.id));
     }
 
     onCancel = $=> {
