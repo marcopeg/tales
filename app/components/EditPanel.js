@@ -19,30 +19,30 @@ const dataTypes = {
 export class EditPanel extends React.Component {
 
     static defaultProps = {
-        dataType: 'void',
-        data: null,
+        fields: null,
         onSave: __noop,
         onCancel: __noop
     }
 
     state = {
         isVisible: false,
-        title: '',
-        desc: ''
+        title: 'Modal Title'
     }
 
     componentWillMount() {
-        var { data, dataType } = this.props;
-        var { title, desc } = dataTypes[dataType](data || {});
-        var isVisible = null !== data;
-        this.setState({isVisible, title, desc});
+        this.__setModalTitle(this.props.fields);
     }
 
     componentWillReceiveProps(nextProps) {
-        var { data, dataType } = nextProps;
-        var { title, desc } = dataTypes[dataType](data || {});
-        var isVisible = null !== data;
-        this.setState({isVisible, title, desc});
+        this.__setModalTitle(nextProps.fields);
+    }
+
+    __setModalTitle = fields => {
+        if (fields) {
+            fields
+            .filter(field => field.isTitle)
+            .forEach(field => this.setState({title: field.value}));
+        }
     }
 
     onSave = () => {
@@ -52,10 +52,11 @@ export class EditPanel extends React.Component {
     render() {
 
         var header, content, footer;
-        var { onCancel } = this.props;
+        var { fields, onCancel } = this.props;
         var { onSave } = this;
 
-        var { isVisible, title, desc } = this.state;
+        var { title } = this.state;
+        var isVisible = null !== fields;
 
         if (isVisible) {
 
@@ -67,7 +68,7 @@ export class EditPanel extends React.Component {
 
             content = (
                 <Modal.Body>
-                    <p>{desc}</p>
+                    <p>--desc--</p>
                 </Modal.Body>
             );
 

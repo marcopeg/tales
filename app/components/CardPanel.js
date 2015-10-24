@@ -1,4 +1,5 @@
 
+import marked from 'marked';
 import React from 'react';
 import { __noop } from 'utils/mishellaneous';
 

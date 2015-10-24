@@ -35,23 +35,41 @@ export class Characters extends React.Component {
         var { items, activeItem } = this.props;
         var { onEdit, onDelete, onCancel, onSave } = this;
 
+        var fields = null;
+        if (activeItem) {
+            activeItem = items[activeItem];
+            fields = [{
+                type: 'text',
+                label: 'Name',
+                value: activeItem.name,
+                isTitle: true
+            },{
+                type: 'textarea',
+                label: 'Description',
+                value: activeItem.desc
+            }];
+        }
+
+        var editPanel = (
+            <EditPanel 
+                fields={fields}
+                onCancel={onCancel}
+                onSave={onSave} />
+        );
+
         var toObject = id => {
             return { id, ...items[id] };
         };
 
         var toPanel = item => (
-            <CardPanel
-                id={item.id}
-                title={item.name}
-                desc={item.desc}
-                key={item.id}
-                onEdit={$=> onEdit(item)}
-                onDelete={$=> onDelete(item)} />
+            <Col xs={4} key={item.id}>
+                <CardPanel
+                    title={item.name}
+                    desc={item.parsedDesc}
+                    onEdit={$=> onEdit(item)}
+                    onDelete={$=> onDelete(item)} />
+            </Col>
         );
-
-        if (activeItem) {
-            activeItem = items[activeItem];
-        }
 
         items = Object.keys(items)
                     .map(toObject)
@@ -60,17 +78,9 @@ export class Characters extends React.Component {
         return (
             <Grid fluid>
                 <Row>
-                    <Col xs={12}>
-                        {items}
-                        
-                        <EditPanel 
-                            dataType="character" 
-                            data={activeItem}
-                            onCancel={onCancel}
-                            onSave={onSave} />
-
-                    </Col>
+                    {items}
                 </Row>
+                {editPanel}
             </Grid>
         );
     }
