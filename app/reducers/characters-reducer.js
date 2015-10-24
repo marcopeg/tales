@@ -1,11 +1,9 @@
 
-import { BASIC } from '../../specs/characters.fixture';
-
 import { START_EDIT, CANCEL_EDIT } from 'actions/characters-actions';
 
 export const initialState = {
-    items: BASIC,
-    // activeItem: 'c7d677dd'
+    items: {},
+    activeItem: null
 };
 
 export function charactersReducer(state = initialState, action) {

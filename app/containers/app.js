@@ -10,9 +10,16 @@ import Col from 'react-bootstrap/lib/Col';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import NavBrand from 'react-bootstrap/lib/NavBrand';
 
+import { SideMenu } from 'containers/SideMenu';
 import { Characters } from 'containers/Characters';
+import { Locations } from 'containers/Locations';
 
-@connect(s => s)
+const viewsObjects = {
+    characters: Characters,
+    locations: Locations
+};
+
+@connect(s => s.app)
 export class App extends React.Component {
 
     componentWillMount() {
@@ -20,6 +27,14 @@ export class App extends React.Component {
     }
 
     render() {
+
+        var { currentView } = this.props;
+
+        if (currentView) {
+            var CurrentView = viewsObjects[currentView];
+            currentView = <CurrentView />;
+        }
+
         return (
             <Grid fluid style={{marginTop:80}}>
                 <Navbar fixedTop>
@@ -27,10 +42,10 @@ export class App extends React.Component {
                 </Navbar>
                 <Row>
                     <Col xs={4}>
-                        left
+                        <SideMenu />
                     </Col>
                     <Col xs={8}>
-                        <Characters />
+                        {currentView}
                     </Col>
                 </Row>
             </Grid>

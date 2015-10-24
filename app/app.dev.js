@@ -13,7 +13,8 @@ import { makeStore } from 'utils/store';
 
 var Main = require(__DEBUG__ ? 'utils/main-debug' : 'utils/main').Main;
 
-var store = makeStore(__DEBUG__, {});
+import * as initialStates from '../specs/initial-state.fixture';
+var store = makeStore(__DEBUG__, initialStates.CHARACTERS);
 
 ReactDOM.render((
     <Main 
