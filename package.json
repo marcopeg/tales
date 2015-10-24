@@ -48,5 +48,8 @@
     "url-loader": "^0.5.6",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.10.1"
+  },
+  "dependencies": {
+    "react-quill": "^0.2.2"
   }
 }
