@@ -6,6 +6,7 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
+import { PageHeader } from 'components/PageHeader';
 import { CardPanel } from 'components/CardPanel';
 import { EditPanel } from 'components/EditPanel';
 
@@ -13,6 +14,10 @@ import { startEdit, cancelEdit, updateItem } from 'actions/characters-actions';
 
 @connect(s => s.characters)
 export class Characters extends React.Component {
+
+    onCreate = () => {
+        console.log('new item');
+    }
 
     onEdit = item => {
         this.props.dispatch(startEdit(item.id));
@@ -35,7 +40,7 @@ export class Characters extends React.Component {
     render() {
 
         var { items, activeItem } = this.props;
-        var { onEdit, onDelete, onCancel, onSave } = this;
+        var { onCreate, onEdit, onDelete, onCancel, onSave } = this;
 
         var fields = null;
         if (activeItem) {
@@ -53,13 +58,6 @@ export class Characters extends React.Component {
                 value: activeItem.desc
             }];
         }
-
-        var editPanel = (
-            <EditPanel 
-                fields={fields}
-                onCancel={onCancel}
-                onSave={onSave} />
-        );
 
         var toObject = id => {
             return { id, ...items[id] };
@@ -81,10 +79,16 @@ export class Characters extends React.Component {
 
         return (
             <Grid fluid>
-                <Row>
-                    {items}
-                </Row>
-                {editPanel}
+                <PageHeader
+                    title="Characters"
+                    action={onCreate} />
+
+                <Row children={items} />
+                
+                <EditPanel 
+                    fields={fields}
+                    onCancel={onCancel}
+                    onSave={onSave} />
             </Grid>
         );
     }
