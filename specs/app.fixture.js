@@ -1,9 +1,4 @@
 
-export const CHARACTERS = {
-    currentView: 'characters'
+export const BASIC = {
+    currentView: null
 };
-
-export const LOCATIONS = {
-    currentView: 'locations'
-};
-

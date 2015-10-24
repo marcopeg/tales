@@ -27,7 +27,6 @@ export class App extends React.Component {
     }
 
     render() {
-
         var { currentView } = this.props;
 
         if (currentView) {
