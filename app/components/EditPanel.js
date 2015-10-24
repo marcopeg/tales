@@ -6,6 +6,8 @@ import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
+import { FormField } from 'components/FormField';
+
 export class EditPanel extends React.Component {
 
     static defaultProps = {
@@ -71,10 +73,12 @@ export class EditPanel extends React.Component {
             var { name, type, label } = field;
             var value = values[name];
             return (
-                <p key={name}>
-                    {label}
-                    <input value={value} onChange={this.onFieldUpdate(name)} />
-                </p>
+                <FormField 
+                    key={name}
+                    type={type} 
+                    label={label}
+                    value={value} 
+                    onChange={this.onFieldUpdate(name)} />
             );
         });
 
