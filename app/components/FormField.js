@@ -12,7 +12,7 @@ export class FormField extends React.Component {
                 return (
                     <div className="form-group">
                         <label>{label}</label>
-                        <div style={{height:200, border:'1px solid #ddd', borderRadius:5}}>
+                        <div style={{height:150, border:'1px solid #ddd', borderRadius:5}}>
                             <ReactQuill
                                 theme="snow"
                                 value={value}

@@ -1,5 +1,5 @@
 
-import { START_EDIT, CANCEL_EDIT, UPDATE_ITEM } from 'actions/characters-actions';
+import { START_CREATE, START_EDIT, CANCEL_EDIT, UPDATE_ITEM } from 'actions/characters-actions';
 
 export const initialState = {
     items: {},
@@ -9,6 +9,8 @@ export const initialState = {
 export function charactersReducer(state = initialState, action) {
     var { type, payload } = action;
     switch (type) {
+        case START_CREATE:
+            return { ...state, activeItem: type };
         case START_EDIT:
             return { ...state, activeItem: payload.id };
         case CANCEL_EDIT:

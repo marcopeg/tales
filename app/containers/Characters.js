@@ -10,13 +10,14 @@ import { PageHeader } from 'components/PageHeader';
 import { CardPanel } from 'components/CardPanel';
 import { EditPanel } from 'components/EditPanel';
 
-import { startEdit, cancelEdit, updateItem } from 'actions/characters-actions';
+import { startCreate, startEdit, cancelEdit, updateItem } from 'actions/characters-actions';
+import { START_CREATE } from 'actions/characters-actions';
 
 @connect(s => s.characters)
 export class Characters extends React.Component {
 
     onCreate = () => {
-        console.log('new item');
+        this.props.dispatch(startCreate());
     }
 
     onEdit = item => {
@@ -33,7 +34,13 @@ export class Characters extends React.Component {
 
     onSave = data => {
         var { activeItem } = this.props;
-        this.props.dispatch(updateItem(activeItem, data));
+
+        if (activeItem === START_CREATE) {
+            console.log('create new item', data);
+        } else {
+            this.props.dispatch(updateItem(activeItem, data));
+        }
+        
         this.props.dispatch(cancelEdit());
     }
 
@@ -43,8 +50,17 @@ export class Characters extends React.Component {
         var { onCreate, onEdit, onDelete, onCancel, onSave } = this;
 
         var fields = null;
-        if (activeItem) {
+
+        if (activeItem === START_CREATE) {
+            activeItem = {
+                name: 'new character',
+                desc: ''
+            }
+        } else if (activeItem) {
             activeItem = items[activeItem];
+        }
+
+        if (activeItem) {
             fields = [{
                 name: 'name',
                 type: 'text',

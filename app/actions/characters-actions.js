@@ -1,7 +1,15 @@
 
+export const START_CREATE = 'characters@startCreate';
 export const START_EDIT = 'characters@startEdit';
 export const CANCEL_EDIT = 'characters@cancelEdit';
 export const UPDATE_ITEM = 'characters@updateItem';
+
+export function startCreate() {
+    return {
+        type: START_CREATE
+    }
+}
+
 
 export function startEdit(id) {
     return {

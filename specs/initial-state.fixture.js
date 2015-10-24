@@ -8,5 +8,6 @@ export const DEV = {
     },
     characters: { ...characters.BASIC, 
         // activeItem: Object.keys(characters.BASIC.items)[0]
+        // activeItem: '@@new'
     }
 };
