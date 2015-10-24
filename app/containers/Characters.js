@@ -65,7 +65,7 @@ export class Characters extends React.Component {
             <Col xs={4} key={item.id}>
                 <CardPanel
                     title={item.name}
-                    desc={item.parsedDesc}
+                    desc={item.desc}
                     onEdit={$=> onEdit(item)}
                     onDelete={$=> onDelete(item)} />
             </Col>
