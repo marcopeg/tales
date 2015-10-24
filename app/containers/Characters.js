@@ -73,6 +73,11 @@ export class Characters extends React.Component {
                 type: 'textarea',
                 label: 'Description',
                 value: activeItem.desc
+            },{
+                name: 'order',
+                type: 'text',
+                label: 'Order',
+                value: activeItem.order
             }];
         }
 
@@ -90,8 +95,19 @@ export class Characters extends React.Component {
             </Col>
         );
 
+        var toOrder = (a, b) => {
+            if (a.order < b.order) {
+                return -1;
+            }
+            if (a.order > b.order) {
+                return 1;
+            }
+            return 0;
+        }
+
         items = Object.keys(items)
                     .map(toObject)
+                    .sort(toOrder)
                     .map(toPanel);
 
         if (isLoading) {
