@@ -31,7 +31,7 @@ export class CardPanel extends React.Component {
 
         return (
             <Panel header={header}>
-                <div dangerouslySetInnerHTML={{__html: desc}} />
+                <div dangerouslySetInnerHTML={{__html: desc}} style={{height:80, overflow:'auto'}} />
             </Panel>
         );
     }

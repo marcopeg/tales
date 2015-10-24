@@ -5,6 +5,7 @@ export const CANCEL_EDIT = 'characters@cancelEdit';
 export const UPDATE_ITEM = 'characters@updateItem';
 export const REMOVE_ITEM = 'characters@removeItem';
 export const SET_SAVING = 'characters@setSaving';
+export const SET_LOADING = 'characters@setLoading';
 
 export function startCreate() {
     return {
@@ -42,6 +43,13 @@ export function removeItem(id) {
 export function setSaving(value) {
     return {
         type: SET_SAVING,
+        payload: { value: !!value }
+    }
+}
+
+export function setLoading(value) {
+    return {
+        type: SET_LOADING,
         payload: { value: !!value }
     }
 }

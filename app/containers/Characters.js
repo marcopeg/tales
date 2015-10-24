@@ -46,7 +46,7 @@ export class Characters extends React.Component {
 
     render() {
 
-        var { items, activeItem, isSaving } = this.props;
+        var { items, activeItem, isSaving, isLoading } = this.props;
         var { onCreate, onEdit, onDelete, onCancel, onSave } = this;
 
         var fields = null;
@@ -69,7 +69,8 @@ export class Characters extends React.Component {
                 isTitle: true
             },{
                 name: 'desc',
-                type: 'wysiwyg',
+                // type: 'wysiwyg',
+                type: 'textarea',
                 label: 'Description',
                 value: activeItem.desc
             }];
@@ -92,6 +93,16 @@ export class Characters extends React.Component {
         items = Object.keys(items)
                     .map(toObject)
                     .map(toPanel);
+
+        if (isLoading) {
+            items = (
+                <Row>
+                    <Col xs={12}>
+                        <p>loading...</p>
+                    </Col>
+                </Row>
+            );
+        }
 
         return (
             <Grid fluid>

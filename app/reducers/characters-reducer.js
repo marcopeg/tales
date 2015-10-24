@@ -5,12 +5,14 @@ import {
     CANCEL_EDIT,
     UPDATE_ITEM,
     REMOVE_ITEM,
-    SET_SAVING
+    SET_SAVING,
+    SET_LOADING
 } from 'actions/characters-actions';
 
 export const initialState = {
     items: {},
     activeItem: null,
+    isLoading: true,
     isSaving: false
 };
 
@@ -33,6 +35,8 @@ export function charactersReducer(state = initialState, action) {
             return { ...state, items };
         case SET_SAVING:
             return { ...state, isSaving: payload.value};
+        case SET_LOADING:
+            return { ...state, isLoading: payload.value};
         default:
             return state;
     }

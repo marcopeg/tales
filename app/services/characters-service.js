@@ -3,16 +3,22 @@ import {
     updateItem,
     cancelEdit,
     setSaving,
+    setLoading,
     removeItem
 } from 'actions/characters-actions';
 
 import { getRef } from 'services/firebase-service';
 
-var charactersRef;
+var charactersRef, charactersKeys;
 
 export function init() {
     return (dispatch, getState) => {
         charactersRef = getRef('characters');
+        charactersKeys = getRef('charactersKeys');
+
+        charactersKeys.on('value', snap => {
+            dispatch(setLoading(false));
+        });
 
         charactersRef.on('child_added', snap => {
             dispatch(updateItem(snap.key(), snap.val()));
@@ -32,9 +38,12 @@ export function init() {
 export function create(data) {
     return (dispatch, getState) => {
         dispatch(setSaving(true));
-        charactersRef.push(data, err => {
-            dispatch(setSaving(false));
-            dispatch(cancelEdit());
+        var itemRef = charactersRef.push();
+        itemRef.set(data, err => {
+            charactersKeys.child(itemRef.key()).set(Date.now(), err => {
+                dispatch(setSaving(false));
+                dispatch(cancelEdit());
+            });
         });
     }
 }
