@@ -13,7 +13,8 @@ export class EditPanel extends React.Component {
     static defaultProps = {
         fields: null,
         onSave: __noop,
-        onCancel: __noop
+        onCancel: __noop,
+        isSaving: false
     }
 
     state = {
@@ -62,7 +63,7 @@ export class EditPanel extends React.Component {
 
     render() {
 
-        var { fields, onCancel } = this.props;
+        var { fields, onCancel, isSaving } = this.props;
         var { titleField, values } = this.state;
         var { onSave } = this;
 
@@ -82,6 +83,11 @@ export class EditPanel extends React.Component {
             );
         });
 
+        var saveLbl = 'Save';
+        if (isSaving) {
+            saveLbl = 'saving...';
+        }
+
         return (
             <Modal show={isVisible} onHide={onCancel} bsSize="large">
                 <Modal.Header closeButton>
@@ -95,7 +101,7 @@ export class EditPanel extends React.Component {
                         cancel
                     </Button>
                     <Button bsStyle="primary" onClick={onSave}>
-                        Save
+                        {saveLbl}
                     </Button>
                 </Modal.Footer>
             </Modal>

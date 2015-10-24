@@ -1,9 +1,16 @@
 
-import { START_CREATE, START_EDIT, CANCEL_EDIT, UPDATE_ITEM } from 'actions/characters-actions';
+import {
+    START_CREATE,
+    START_EDIT,
+    CANCEL_EDIT,
+    UPDATE_ITEM,
+    SET_SAVING
+} from 'actions/characters-actions';
 
 export const initialState = {
     items: {},
-    activeItem: null
+    activeItem: null,
+    isSaving: false
 };
 
 export function charactersReducer(state = initialState, action) {
@@ -19,6 +26,8 @@ export function charactersReducer(state = initialState, action) {
             var items = { ...state.items };
             items[payload.id] = payload.data;
             return { ...state, items };
+        case SET_SAVING:
+            return { ...state, isSaving: payload.value};
         default:
             return state;
     }

@@ -10,8 +10,10 @@ import { PageHeader } from 'components/PageHeader';
 import { CardPanel } from 'components/CardPanel';
 import { EditPanel } from 'components/EditPanel';
 
-import { startCreate, startEdit, cancelEdit, updateItem } from 'actions/characters-actions';
+import { startCreate, startEdit, cancelEdit } from 'actions/characters-actions';
 import { START_CREATE } from 'actions/characters-actions';
+
+import { create, save } from 'services/characters-service';
 
 @connect(s => s.characters)
 export class Characters extends React.Component {
@@ -36,17 +38,15 @@ export class Characters extends React.Component {
         var { activeItem } = this.props;
 
         if (activeItem === START_CREATE) {
-            console.log('create new item', data);
+            this.props.dispatch(create(data));
         } else {
-            this.props.dispatch(updateItem(activeItem, data));
+            this.props.dispatch(save(activeItem, data));
         }
-        
-        this.props.dispatch(cancelEdit());
     }
 
     render() {
 
-        var { items, activeItem } = this.props;
+        var { items, activeItem, isSaving } = this.props;
         var { onCreate, onEdit, onDelete, onCancel, onSave } = this;
 
         var fields = null;
@@ -104,7 +104,8 @@ export class Characters extends React.Component {
                 <EditPanel 
                     fields={fields}
                     onCancel={onCancel}
-                    onSave={onSave} />
+                    onSave={onSave}
+                    isSaving={isSaving} />
             </Grid>
         );
     }
