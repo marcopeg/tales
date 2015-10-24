@@ -10,6 +10,7 @@ export class CardPanel extends React.Component {
     static defaultProps = {
         title: null,
         desc: null,
+        order: null,
         img: null,
         onEdit: __noop,
         onDelete: __noop
@@ -17,7 +18,7 @@ export class CardPanel extends React.Component {
 
     render() {
 
-        var { title, desc, img, onEdit, onDelete } = this.props;
+        var { title, desc, order, img, onEdit, onDelete } = this.props;
 
         var header = (
             <div>
@@ -25,7 +26,7 @@ export class CardPanel extends React.Component {
                     <Glyphicon glyph="edit" onClick={onEdit} style={{marginRight:5}} />
                     <Glyphicon glyph="trash" onClick={onDelete} />
                 </div>
-                <span>{title}</span>
+                <span>{title} <small>{order}</small></span>
             </div>
         );
 

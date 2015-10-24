@@ -90,16 +90,19 @@ export class Characters extends React.Component {
                 <CardPanel
                     title={item.name}
                     desc={item.desc}
+                    order={item.order}
                     onEdit={$=> onEdit(item)}
                     onDelete={$=> onDelete(item)} />
             </Col>
         );
 
         var toOrder = (a, b) => {
-            if (a.order < b.order) {
+            a = parseInt(a.order);
+            b = parseInt(b.order);
+            if (a < b) {
                 return -1;
             }
-            if (a.order > b.order) {
+            if (a > b) {
                 return 1;
             }
             return 0;
