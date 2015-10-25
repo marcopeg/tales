@@ -8,7 +8,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 export class CardPanel extends React.Component {
 
     static defaultProps = {
-        title: null,
+        title: 'title',
         desc: null,
         order: null,
         img: null,

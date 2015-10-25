@@ -3,14 +3,21 @@ var webpack = require('webpack');
 
 module.exports = {
     devtool: 'sourcemaps',
-    entry: [
-        'webpack-dev-server/client?http://localhost:3000',
-        'webpack/hot/only-dev-server',
-        './app/app.dev'
-    ],
+    entry: {
+        'app' : [
+            'webpack-dev-server/client?http://localhost:3000',
+            'webpack/hot/only-dev-server',
+            './app/app.dev'
+        ],
+        'specs' : [
+            'webpack-dev-server/client?http://localhost:3000',
+            'webpack/hot/only-dev-server',
+            './specs/specs'
+        ]
+    },
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'bundle.js',
+        filename: '[name].js',
         publicPath: '/'
     },
     plugins: [
@@ -22,6 +29,7 @@ module.exports = {
         modulesDirectories: [
             'node_modules',
             path.join(__dirname, 'app'),
+            path.join(__dirname, 'app')
         ]
     },
     module: {

@@ -13,7 +13,7 @@ import { makeStore } from 'utils/store';
 
 var Main = require(__DEBUG__ ? 'utils/main-debug' : 'utils/main').Main;
 
-import * as initialStates from '../specs/initial-state.fixture';
+import * as initialStates from '../specs/fixtures/initial-state.fixture';
 var store = makeStore(__DEBUG__, initialStates.DEV);
 
 ReactDOM.render((
