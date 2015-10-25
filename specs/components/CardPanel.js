@@ -25,10 +25,12 @@ export default class CardPanel extends React.Component {
                             desc="hey, I am very nice <b>girl</b> :-)<p>1</p><p>2</p><p>3</p><p>4</p><p>5</p><p>6</p>" />
                     </Col>
                     <Col xs={6}>
-                        <Component />
+                        <Component
+                            title="Silvia"
+                            desc="hey, I am very nice <b>girl</b> :-)" />
                     </Col>
                     <Col xs={6}>
-                        <Component title="foo" />
+                        <Component onUpload={f => console.log(f)} />
                     </Col>
                 </Row>
             </Grid>
