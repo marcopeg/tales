@@ -8,17 +8,28 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 export class CardPanel extends React.Component {
 
     static defaultProps = {
-        title: 'title',
+        title: null,
         desc: null,
+        cover: null,
         order: null,
         img: null,
         onEdit: __noop,
-        onDelete: __noop
+        onDelete: __noop,
+        onCoverChange: __noop
     }
 
     render() {
 
-        var { title, desc, order, img, onEdit, onDelete } = this.props;
+        var {
+            title,
+            desc,
+            cover,
+            order,
+            img,
+            onEdit,
+            onDelete,
+            onCoverChange
+        } = this.props;
 
         var header = (
             <div>
@@ -30,10 +41,26 @@ export class CardPanel extends React.Component {
             </div>
         );
 
+        var content = (
+            <div className="card-panel__desc">
+                <span dangerouslySetInnerHTML={{__html: desc}} />
+            </div>
+        );
+
+        if (cover) {
+            content = (
+                <div className="card-panel__cover">
+                    <img src={cover} className="img-responsive img-rounded" />
+                    {content}
+                </div>
+            );
+        }
+
         return (
-            <Panel header={header}>
-                <div dangerouslySetInnerHTML={{__html: desc}} style={{height:80, overflow:'auto'}} />
-            </Panel>
+            <Panel 
+                className="card-panel"
+                header={header} 
+                children={content} />
         );
     }
 }
