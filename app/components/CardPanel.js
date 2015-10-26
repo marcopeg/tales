@@ -3,6 +3,7 @@ import { bigLog } from 'utils/debug';
 
 import React from 'react';
 import { __noop } from 'utils/mishellaneous';
+import { FILTERS as UPLOAD_FILTERS} from 'utils/uploads';
 
 import Panel from 'react-bootstrap/lib/Panel';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -48,26 +49,37 @@ export class CardPanel extends React.Component {
         e.stopPropagation();
         this.setState({isDragging: false});
 
-        var onReady = $=> {}
-
         var droppedFiles = e.dataTransfer ? e.dataTransfer.files : e.target.files;
         var files = [];
         var loaded = 0;
 
-        for (var i = 0; i < droppedFiles.length; i++) {
-            var file = droppedFiles[i];
+        // needs a clojure to handle the correct value of "file"
+        // NOTE: it doesn't keep the selection order during upload
+        //       we may need some async series code here.
+        var makeFile = (file, i) => {
             var reader = new FileReader();
-
             reader.onload = e => {
                 file.b64 = e.target.result;
                 file.localUrl = window.URL.createObjectURL(file);
-                files.push(file);
+                files.push({
+                    type: file.type,
+                    name: file.name,
+                    size: file.size,
+                    lastModified: file.lastModified,
+                    localUrl: file.localUrl,
+                    b64: file.b64
+                });
 
+                // detect file manipulation is complete
                 if (files.length === droppedFiles.length) {
                     this.onFilesReady(files);
                 }
             }
             reader.readAsDataURL(file);
+        };
+
+        for (var i = 0; i < droppedFiles.length; i++) {
+            makeFile(droppedFiles[i], i);
         }        
     }
 
