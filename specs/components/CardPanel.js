@@ -8,6 +8,23 @@ import { CardPanel as Component } from 'components/CardPanel';
 
 import img1 from '../assets/js1.png';
 
+import { resize } from 'utils/uploads';
+
+function showFirst(files) {
+    var file = files.shift();
+    document.body.innerHTML = '';
+
+    var img = new Image();
+    document.body.appendChild(img);
+    resize(file, 50, resized => img.src = resized.b64);
+
+    setTimeout($=> {
+        img = new Image();
+        img.src = file.b64;
+        document.body.appendChild(img);
+    }, 50);
+}
+
 export default class CardPanel extends React.Component {
     render() {
         return (
@@ -30,7 +47,7 @@ export default class CardPanel extends React.Component {
                             desc="hey, I am very nice <b>girl</b> :-)" />
                     </Col>
                     <Col xs={6}>
-                        <Component onUpload={f => console.log(f)} />
+                        <Component onUpload={showFirst} />
                     </Col>
                 </Row>
             </Grid>
