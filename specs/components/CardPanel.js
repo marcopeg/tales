@@ -8,21 +8,25 @@ import { CardPanel as Component } from 'components/CardPanel';
 
 import img1 from '../assets/js1.png';
 
-import { resize } from 'utils/uploads';
+import { resize, crop } from 'utils/uploads';
 
 function showFirst(files) {
     var file = files.shift();
-    document.body.innerHTML = '';
+    // document.body.innerHTML = '';
 
-    var img = new Image();
-    document.body.appendChild(img);
-    resize(file, 50, resized => img.src = resized.b64);
+    // var img = new Image();
+    // document.body.appendChild(img);
+    // resize(file, 80, resized => img.src = resized.b64);
 
-    setTimeout($=> {
-        img = new Image();
-        img.src = file.b64;
-        document.body.appendChild(img);
-    }, 50);
+    // var img1 = new Image();
+    // document.body.appendChild(img1);
+    // crop(file, 80, resized => img1.src = resized.b64);
+
+    // setTimeout($=> {
+    //     var img2 = new Image();
+    //     img2.src = file.b64;
+    //     document.body.appendChild(img2);
+    // }, 50);
 }
 
 export default class CardPanel extends React.Component {

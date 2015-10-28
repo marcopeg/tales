@@ -3,7 +3,7 @@ import { bigLog } from 'utils/debug';
 
 import React from 'react';
 import { __noop } from 'utils/mishellaneous';
-import { FILTERS as UPLOAD_FILTERS} from 'utils/uploads';
+import { FILTERS as UPLOAD_FILTERS, crop} from 'utils/uploads';
 
 import Panel from 'react-bootstrap/lib/Panel';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -86,9 +86,10 @@ export class CardPanel extends React.Component {
     onFilesReady = files => {
         var { cover } = this.props;
         if (!cover) {
-            cover = files.filter(file => file.type.indexOf('image/') !== -1).shift();
+            console.log(files);
+            cover = files.filter(UPLOAD_FILTERS.image).shift();
             if (cover) {
-                this.setState({tmpCover: cover.b64});
+                crop(cover, 250, cropped => this.setState({tmpCover: cropped.b64}));
             }
         }
         this.props.onUpload(files);
